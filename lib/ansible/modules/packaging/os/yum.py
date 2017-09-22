@@ -680,8 +680,7 @@ def list_stuff(module, repoquerybin, conf_file, stuff, installroot='/', disabler
         return [pkg_to_dict(p) for p in sorted(is_available(module, repoq, '-a', conf_file, qf=qf, installroot=installroot)) if p.strip()]
     elif stuff == 'repos':
         return [dict(repoid=name, state='enabled') for name in sorted(repolist(module, repoq)) if name.strip()]
-    else:
-        return [pkg_to_dict(p) for p in sorted(is_installed(module, repoq, stuff, conf_file, qf=is_installed_qf, installroot=installroot)+
+    return [pkg_to_dict(p) for p in sorted(is_installed(module, repoq, stuff, conf_file, qf=is_installed_qf, installroot=installroot)+
                                                 is_available(module, repoq, stuff, conf_file, qf=qf, installroot=installroot)) if p.strip()]
 
 
