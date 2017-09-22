@@ -116,8 +116,7 @@ def remove_package(module, name):
 
     if rc == 0:
         return rc, stdout
-    else:
-        return rc, stderr
+    return rc, stderr
 
 def install_package(module, depot, name):
     """ Install package if not already installed """
@@ -126,8 +125,7 @@ def install_package(module, depot, name):
     rc, stdout, stderr = module.run_command("%s -s %s %s" % (cmd_install, depot, name))
     if rc == 0:
         return rc, stdout
-    else:
-        return rc, stderr
+    return rc, stderr
 
 def main():
     module = AnsibleModule(
