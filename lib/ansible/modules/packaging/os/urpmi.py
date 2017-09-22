@@ -102,10 +102,7 @@ def query_package(module, name, root):
     # 1 if it is not installed
     cmd = "rpm -q %s %s" % (name, root_option(root))
     rc, stdout, stderr = module.run_command(cmd, check_rc=False)
-    if rc == 0:
-        return True
-    else:
-        return False
+    return rc == 0
 
 def query_package_provides(module, name, root):
     # rpm -q returns 0 if the package is installed,
@@ -153,7 +150,7 @@ def install_packages(module, pkgspec, root, force=True, no_recommends=True):
         if not query_package_provides(module, package, root):
             packages += "'%s' " % package
 
-    if len(packages) != 0:
+    if packages:
         if no_recommends:
             no_recommends_yes = '--no-recommends'
         else:
@@ -184,8 +181,7 @@ def install_packages(module, pkgspec, root, force=True, no_recommends=True):
 def root_option(root):
     if (root):
         return "--root=%s" % (root)
-    else:
-        return ""
+    return ""
 
 def main():
     module = AnsibleModule(
