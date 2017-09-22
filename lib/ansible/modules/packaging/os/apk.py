@@ -168,10 +168,7 @@ def update_package_db(module, exit):
 def query_package(module, name):
     cmd = "%s -v info --installed %s" % (APK_PATH, name)
     rc, stdout, stderr = module.run_command(cmd, check_rc=False)
-    if rc == 0:
-        return True
-    else:
-        return False
+    return rc == 0:
 
 def query_latest(module, name):
     cmd = "%s version %s" % (APK_PATH, name)
@@ -194,10 +191,10 @@ def get_dependencies(module, name):
     cmd = "%s -v info --depends %s" % (APK_PATH, name)
     rc, stdout, stderr = module.run_command(cmd, check_rc=False)
     dependencies = stdout.split()
+    result = []
     if len(dependencies) > 1:
-        return dependencies[1:]
-    else:
-        return []
+        result = dependencies[1:]
+    return []
 
 def upgrade_packages(module, available):
     if module.check_mode:
